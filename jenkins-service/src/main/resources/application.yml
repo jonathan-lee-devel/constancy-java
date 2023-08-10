@@ -1,0 +1,11 @@
+server:
+  port: ${JENKINS_SERVICE_PORT}
+spring:
+  data:
+    mongodb:
+      uri: ${DATABASE_URI}
+constancy:
+  jenkins:
+    service:
+      connection:
+        timeout-milliseconds: 30_000

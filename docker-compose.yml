@@ -1,0 +1,35 @@
+version: '3.8'
+
+volumes:
+  mysql_data:
+    driver: local
+
+services:
+  mysql:
+    image: mysql:8.1.0
+    volumes:
+      - mysql_data:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: keycloak
+      MYSQL_USER: keycloak
+      MYSQL_PASSWORD: password
+  keycloak:
+    image: quay.io/keycloak/keycloak:22.0.1
+    command: start-dev
+    environment:
+      DB_VENDOR: MYSQL
+      DB_ADDR: mysql
+      DB_DATABASE: keycloak
+      DB_USER: keycloak
+      DB_PASSWORD: password
+      KEYCLOAK_ADMIN: admin
+      KEYCLOAK_ADMIN_PASSWORD: admin
+    ports:
+      - '8080:8080'
+    depends_on:
+      - mysql
+  jenkins:
+    image: jenkins/jenkins:lts
+    ports:
+      - '8081:8080'
