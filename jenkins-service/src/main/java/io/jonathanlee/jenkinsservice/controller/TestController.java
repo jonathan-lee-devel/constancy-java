@@ -1,12 +1,14 @@
 package io.jonathanlee.jenkinsservice.controller;
 
 import java.nio.charset.StandardCharsets;
+import java.security.Principal;
 import java.util.Base64;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -25,7 +27,11 @@ public class TestController {
   private final WebClient jenkinsWebClient;
 
   @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-  public ResponseEntity<String> getMapping() {
+  public ResponseEntity<String> getMapping(Principal principal) {
+    log.info("Principal::name -> Subject -> User ID: {}", principal.getName());
+    log.info("Token attributes: {}", ((JwtAuthenticationToken)principal).getTokenAttributes());
+    log.info("Token attributes (given_name): {}", ((JwtAuthenticationToken)principal).getTokenAttributes().getOrDefault("given_name", "undefined"));
+    log.info("Token attributes (family_name): {}", ((JwtAuthenticationToken)principal).getTokenAttributes().getOrDefault("family_name", "undefined"));
     UriSpec<RequestBodySpec> uriSpec = jenkinsWebClient.method(HttpMethod.GET);
     RequestBodySpec requestBodySpec = uriSpec
         .uri("http://localhost:8081/job/TestJob/api/json")
