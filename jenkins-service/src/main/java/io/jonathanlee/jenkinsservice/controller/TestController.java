@@ -36,9 +36,6 @@ public class TestController {
     Mono<String> response = requestBodySpec.exchangeToMono(clientResponse -> {
       if (clientResponse.statusCode().is2xxSuccessful()) {
         return clientResponse.bodyToMono(String.class);
-      } else if (clientResponse.statusCode().is4xxClientError()) {
-        return clientResponse.createException()
-            .flatMap(Mono::error);
       }
       return clientResponse.createException()
           .flatMap(Mono::error);

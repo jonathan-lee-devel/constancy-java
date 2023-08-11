@@ -4,6 +4,21 @@ spring:
   data:
     mongodb:
       uri: ${DATABASE_URI}
+  security:
+    oauth2:
+      client:
+        registration:
+          keycloak:
+            client-id: constancy-java-client
+            authorization-grant-type: authorizatoin_code
+            scope: openid
+        provider:
+          keycloak:
+            issuer-uri: http://localhost:8080/realms/constancy
+            user-name-attribute: preferred_username
+      resourceserver:
+        jwt:
+          issuer-uri: http://localhost:8080/realms/constancy
 constancy:
   jenkins:
     service:
