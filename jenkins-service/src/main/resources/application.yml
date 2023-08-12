@@ -10,7 +10,8 @@ spring:
         registration:
           keycloak:
             client-id: constancy-java-client
-            authorization-grant-type: authorizatoin_code
+            client-secret: vkTuFJnINZWs2IUdaiErEKQmUwrz6pMG
+            authorization-grant-type: authorization_code
             scope: openid
         provider:
           keycloak:

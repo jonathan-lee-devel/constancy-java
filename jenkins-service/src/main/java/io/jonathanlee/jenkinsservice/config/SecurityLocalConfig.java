@@ -28,7 +28,10 @@ public class SecurityLocalConfig {
     http
         .csrf(AbstractHttpConfigurer::disable)
         .cors(Customizer.withDefaults())
-        .authorizeHttpRequests(authorizationManagerRequestMatcherRegistry -> authorizationManagerRequestMatcherRegistry.anyRequest().authenticated());
+        .authorizeHttpRequests(authorizationManagerRequestMatcherRegistry -> authorizationManagerRequestMatcherRegistry.anyRequest().authenticated())
+        .logout(httpSecurityLogoutConfigurer -> httpSecurityLogoutConfigurer.init(http));
+
+    http.oauth2ResourceServer(httpSecurityOAuth2ResourceServerConfigurer -> httpSecurityOAuth2ResourceServerConfigurer.jwt(jwtConfigurer -> {}));
 
     http.oauth2Login(httpSecurityOAuth2LoginConfigurer -> {
       try {
@@ -37,8 +40,6 @@ public class SecurityLocalConfig {
         throw new HttpSecurityOauth2LoginConfigurationException(exception);
       }
     });
-
-    http.oauth2ResourceServer(httpSecurityOAuth2ResourceServerConfigurer -> httpSecurityOAuth2ResourceServerConfigurer.jwt(jwtConfigurer -> {}));
 
     return http.build();
   }
