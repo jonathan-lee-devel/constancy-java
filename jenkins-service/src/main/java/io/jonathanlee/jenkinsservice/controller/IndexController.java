@@ -26,11 +26,14 @@ import reactor.core.publisher.Mono;
 @RestController
 @RequestMapping("/")
 @RequiredArgsConstructor
-public class TestController {
+public class IndexController {
 
   private final WebClient jenkinsWebClient;
 
-  @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+  @GetMapping(
+      value = "/test",
+      produces = MediaType.APPLICATION_JSON_VALUE
+  )
   public ResponseEntity<String> getMapping(Principal principal) {
     log.info("Principal::name -> Subject -> User ID: {}", PrincipalHelper.extractUsername(principal));
     log.info("Token attributes (given_name): {}", PrincipalHelper.extractFirstName(principal));
@@ -44,6 +47,7 @@ public class TestController {
   }
 
   @PostMapping(
+      value = "/test",
       consumes = MediaType.APPLICATION_JSON_VALUE,
       produces = MediaType.APPLICATION_JSON_VALUE
   )
