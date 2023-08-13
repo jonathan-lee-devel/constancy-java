@@ -4,6 +4,7 @@ import io.jonathanlee.commonlib.principal.PrincipalHelper;
 import java.security.Principal;
 import java.util.HashMap;
 import java.util.Map;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.view.RedirectView;
 
+@Slf4j
 @RestController
 @RequestMapping("/")
 public class UserController {
@@ -39,3 +41,4 @@ public class UserController {
   }
 
 }
+
