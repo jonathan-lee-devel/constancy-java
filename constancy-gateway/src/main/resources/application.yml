@@ -1,9 +1,32 @@
+management:
+  endpoint:
+    gateway:
+      enabled: true
+  endpoints:
+    web:
+      exposure:
+        include: '*'
 server:
-  port: ${JENKINS_SERVICE_PORT}
+  port: ${GATEWAY_PORT}
 spring:
-  data:
-    mongodb:
-      uri: ${DATABASE_URI}
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+      globalcors:
+        cors-configurations:
+          '[/**]':
+            allowedOrigins: 'http://localhost:4200'
+            allowedMethods: '*'
+            allowedHeaders: '*'
+      routes:
+        - id: jenkins-service
+          uri: ${constancy.jenkins-service.url}
+          predicates:
+            - Path=/**
+      default-filters:
+        - TokenRelay
   security:
     oauth2:
       client:
@@ -17,9 +40,6 @@ spring:
           keycloak:
             issuer-uri: http://localhost:8080/realms/constancy
             user-name-attribute: preferred_username
-      resourceserver:
-        jwt:
-          issuer-uri: http://localhost:8080/realms/constancy
 constancy:
   gateway:
     url: http://localhost:8082
@@ -27,5 +47,3 @@ constancy:
     url: http://localhost:4200
   jenkins-service:
     url: http://localhost:8083
-    connection:
-      timeout-milliseconds: 30_000

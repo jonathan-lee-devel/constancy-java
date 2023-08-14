@@ -17,7 +17,7 @@ import reactor.netty.http.client.HttpClient;
 @Profile("local")
 public class JenkinsClientLocalConfig {
 
-  @Value("#{new Integer('${constancy.jenkins.service.connection.timeout-milliseconds}')}")
+  @Value("#{new Integer('${constancy.jenkins-service.connection.timeout-milliseconds}')}")
   private Integer connectTimeoutMillis;
 
   @Bean

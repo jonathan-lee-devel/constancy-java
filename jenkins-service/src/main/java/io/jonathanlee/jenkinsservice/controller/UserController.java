@@ -19,11 +19,16 @@ import org.springframework.web.servlet.view.RedirectView;
 @RequestMapping("/")
 public class UserController {
 
-  @Value("${constancy.front-end-url}")
+  @Value("${constancy.front-end.url}")
   private String frontEndUrl;
 
   @GetMapping
   public RedirectView loginRedirect(@RequestParam(value = "continue", required = false) String shouldContinue) {
+    return new RedirectView((shouldContinue != null) ? frontEndUrl + "/keycloak-login-success?continue" : frontEndUrl + "/keycloak-login-success");
+  }
+
+  @GetMapping("/jenkins")
+  public RedirectView jenkinsServiceLoginRedirect(@RequestParam(value = "continue", required = false) String shouldContinue) {
     return new RedirectView((shouldContinue != null) ? frontEndUrl + "/keycloak-login-success?continue" : frontEndUrl + "/keycloak-login-success");
   }
 

@@ -10,7 +10,7 @@ import org.springframework.web.servlet.view.RedirectView;
 @RequestMapping("/realms/constancy/login-actions")
 public class KeycloakController {
 
-  @Value("${constancy.front-end-url}")
+  @Value("${constancy.front-end.url}")
   private String frontEndUrl;
 
   @GetMapping("/login")

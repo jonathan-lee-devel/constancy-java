@@ -1,4 +1,4 @@
-package io.jonathanlee.jenkinsservice.exception;
+package io.jonathanlee.commonlib.exception;
 
 public class Oauth2LoginConfigurationException extends RuntimeException {
 
